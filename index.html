@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Projet Active Directory - PowerShell</title>
+    <link rel="stylesheet" href="style.css" />
+    <style></style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Projet Powershell: Importation d'utilisateurs via CSV dans l'Active
+        directory
+      </h1>
+
+      <h2>Objectif</h2>
+      <p>
+        Dans le cadre de ce projet, j’ai mis en place une infrastructure Active
+        Directory sur une machine virtuelle équipée de Windows Server 2016.
+        Après avoir configuré le système, j’ai ajouté le rôle
+        <strong>Active Directory Domain Services (ADDS)</strong> et promu le
+        serveur en tant que contrôleur de domaine, en créant le domaine
+        <strong>entreprise.fr</strong>.
+      </p>
+
+      <p>
+        L’objectif principal du projet était d’automatiser l’importation
+        d’utilisateurs en masse dans l’Active Directory à partir d’un fichier
+        CSV. Pour cela, j’ai développé un script PowerShell à l’aide de
+        <strong>PowerShell ISE</strong>, l’éditeur de script intégré à Windows.
+        Cet environnement m’a permis d’écrire, tester et corriger le script de
+        manière efficace et rapide.
+      </p>
+
+      <p>
+        Le script lit les données du fichier CSV sans en modifier la structure,
+        et génère automatiquement les attributs nécessaires pour chaque
+        utilisateur :
+      </p>
+      <ul>
+        <li>L’adresse e-mail au format <em>p.nom@entreprise.fr</em> ;</li>
+        <li>
+          Le nom d’utilisateur (SamAccountName) au format <em>p.nom</em> ;
+        </li>
+        <li>
+          L’unité d’organisation (OU) cible, déterminée par le service de
+          l’utilisateur, dans l’arborescence
+          <em>OU=Entreprise,DC=entreprise,DC=FR</em>.
+        </li>
+      </ul>
+
+      <p>
+        Chaque utilisateur est ensuite ajouté dans Active Directory avec les
+        bons attributs, tout en respectant les contraintes de sécurité. Le
+        script inclut une détection automatique des doublons d'identifiants UPN
+        et SamAccountName, et adapte automatiquement les valeurs si nécessaire.
+        Il demande à l'administrateur de spécifier le chemin du fichier CSV au
+        lancement, ce qui le rend plus souple à réutiliser dans différents
+        contextes. Une vérification est également effectuée sur le nom de
+        l'unité d'organisation (OU) pour s'assurer qu'elle existe bien dans
+        l'annuaire avant toute tentative de création de compte.
+      </p>
+
+      <p>
+        Enfin, le script produit un fichier journal (log) listant tous les
+        utilisateurs traités, avec un statut de réussite ou d’échec pour chaque
+        création. Ce log permet une traçabilité complète de l’importation,
+        facilitant les vérifications et le support.
+      </p>
+
+      <p>
+        Ce projet m’a permis de mettre en œuvre mes compétences en
+        administration système, en scripting PowerShell avancé et en gestion
+        d'une infrastructure Active Directory.
+      </p>
+
+      <h2>Étapes du projet (avec affichage d’illustrations au survol)</h2>
+
+      <ol>
+        <li>
+          <strong
+            >Installation de la machine virtuelle Windows Server 2016</strong
+          ><br />
+          Configuration de base de la VM (mémoire, disque, réseau, etc.)
+        </li>
+        <li>
+          <strong
+            >Ajout du rôle ADDS et promotion du serveur en contrôleur de
+            domaine</strong
+          ><br />
+          Installation via le Gestionnaire de serveur<br />
+          Création du domaine <strong>entreprise.fr</strong><br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/vm-adds.webp"
+            alt="ADDS Screenshot"
+            class="hover-image"
+          />
+        </li>
+        <li>
+          <strong>Structure de l’Active Directory</strong><br />
+          Création des OU selon les services dans <em>OU=Entreprise</em><br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/CréationOU.webp"
+            alt="OU Structure Screenshot"
+            class="hover-image"
+          />
+        </li>
+        <li>
+          <strong>Écriture du script PowerShell dans PowerShell ISE</strong
+          ><br />
+          Utilisation de l’éditeur intégré à Windows pour développer le
+          script<br />
+          Lecture du fichier CSV et génération des attributs utilisateurs<br />
+          Vérification de l'existence de l'OU ciblée avant chaque création<br />
+          Ajout dans AD avec gestion automatique des doublons<br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/codepowershell.webp"
+            alt="PowerShell ISE Screenshot"
+            class="hover-image"
+          />
+        </li>
+        <li>
+          <strong>Exécution du script et importation des utilisateurs</strong
+          ><br />
+          Lancement du script après saisie du chemin du fichier CSV<br />
+          Vérification de la création des comptes<br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/ajoutTerminal.webp"
+            alt="PowerShell Execution Screenshot"
+            class="hover-image"
+          />
+        </li>
+        <li>
+          <strong>Vérification dans Active Directory</strong><br />
+          Contrôle visuel des comptes créés dans les bonnes OU<br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/ajout-des-utilisateurs.webp"
+            alt="AD Verification Screenshot"
+            class="hover-image"
+          />
+        </li>
+        <li>
+          <strong>Génération du rapport final</strong><br />
+          Affichage ou export des résultats de l’importation dans un fichier log
+          CSV<br />
+          <span class="hover-zone">[Survoler pour voir l'image]</span>
+          <img
+            src="img/logs.png"
+            alt="Log Report Screenshot"
+            class="hover-image"
+          />
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>
